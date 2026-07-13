@@ -1,0 +1,31 @@
+{
+    "displayName": "Ordens - Impressão de pedidos ",
+    "description": "Mostra os detalhes de pedidos por intervalo de data, fornecedor e estado ",
+    "instructions": "Introduzir as datas de início e fim ",
+    "parameters": [
+        {
+            "name": "start_date",
+            "displayName": "Data Início",
+            "type": "date",
+            "required": true
+        },
+        {
+            "name": "end_date",
+            "displayName": "Data fim",
+            "type": "date",
+            "required": true
+        },
+        {
+            "name": "supplier",
+            "displayName": "Fornecedor",
+            "type": "text",
+            "required": false
+        },
+        {
+            "name": "order_status",
+            "displayName": "Estado do pedido",
+            "type": "text",
+            "required": false
+        }
+    ]
+}
