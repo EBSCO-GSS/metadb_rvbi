@@ -61,7 +61,7 @@ LEFT JOIN folio_organizations.organizations__t__ org  ON org.id = po.vendor
 WHERE po.__current
   AND pol.__current
   AND po.date_ordered::date BETWEEN start_date AND end_date
-  AND (order_status = '' OR po.approved LIKE '%' || order_status || '%' )
+  AND (order_status = '' OR po.workflow_status LIKE '%' || order_status || '%' )
   AND (supplier     = '' OR org.name LIKE '%' || supplier || '%')
 order by po.po_number desc, pol.po_line_number
 $$
