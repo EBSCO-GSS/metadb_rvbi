@@ -64,6 +64,7 @@ WHERE po.__current
   AND po.date_ordered::date BETWEEN start_date AND end_date
   AND (order_status = '' OR ILIKE '%' || po.workflow_status || '%' )
   AND (supplier     = '' OR org.name ILIKE '%' || supplier || '%')
+order by po.po_number desc
 $$
 LANGUAGE SQL
 STABLE

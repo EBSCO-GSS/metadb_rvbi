@@ -1,0 +1,25 @@
+{
+    "displayName": "Consulta local ",
+    "description": "Mostra os exemplares que foram consultados em sala/local",
+    "instructions": "Introduzir as datas(devolução) de início e fim, e o código do ponto de serviço(opcional) ",
+    "parameters": [
+        {
+            "name": "start_date",
+            "displayName": "Data Início",
+            "type": "date",
+            "required": true
+        },
+        {
+            "name": "end_date",
+            "displayName": "Data fim",
+            "type": "date",
+            "required": true
+        },
+        {
+            "name": "service_point",
+            "displayName": "Ponto de serviço",
+            "type": "text",
+            "required": false
+        }
+    ]
+}
