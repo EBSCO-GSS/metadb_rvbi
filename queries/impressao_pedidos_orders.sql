@@ -10,9 +10,9 @@ CREATE FUNCTION impressao_pedidos_orders(
 )
 RETURNS TABLE (
     po_number               text,
+    approved                boolean,
     workflow_status         text,
-    approved                int,
-    manual_po               int,
+    manual_po               boolean,
     order_type              text,
     date_ordered            timestamptz,
     approval_date           timestamptz,
@@ -23,7 +23,7 @@ RETURNS TABLE (
     publisher               text,
     title_or_package        text,
     edition                 text,
-    is_package              int,
+    is_package              boolean,
     currency                text,
     quantity_physical       int,
     list_unit_price         numeric,
