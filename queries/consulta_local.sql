@@ -8,25 +8,25 @@ CREATE FUNCTION consulta_local(
     service_point text DEFAULT ''
 )
 RETURNS TABLE (
-    loan_date                timestamptz,
-    return_date              timestamptz,
-    barcode                  text,
-    copy_number              text,
-    effective_shelving_order text,
-    title                    text,
-    code                     text,
-    discovery_display_name   text
+    "Data Empréstimo"  timestamptz,
+    "Data Devolução"   timestamptz,
+    "Código de Barras" text,
+    "Cópia"            text,
+    "Call Number"      text,
+    "Título"           text,
+    "Código PS"        text,
+    "Nome PS"          text
 )
 AS $$
 SELECT
-    lt.loan_date as "Data empréstimo",
-    lt.return_date as "Data devolução",
-    it.barcode as "Código barras",
-    it.copy_number  as "Cópia",
-    it.effective_shelving_order  as "Call number",
-    it2.title  as "Título",
-    spt.code  as "Código PS",
-    spt.discovery_display_name  as "Nome PS"
+    lt.loan_date,
+    lt.return_date,
+    it.barcode,
+    it.copy_number,
+    it.effective_shelving_order,
+    it2.title,
+    spt.code,
+    spt.discovery_display_name
 FROM folio_circulation.loan__t__                lt
 LEFT JOIN  folio_inventory.item__t__            it  ON it.id  = lt.item_id
                                                     AND it.__current
