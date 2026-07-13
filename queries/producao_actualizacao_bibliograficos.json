@@ -1,0 +1,19 @@
+{
+    "displayName": "Produção - Actualização registos bibliográficos",
+    "description": "Mostra os totais de actualização de registros bibliograficos por operador",
+    "instructions": "Introduzir as datas de início e fim ",
+    "parameters": [
+        {
+            "name": "start_date",
+            "displayName": "Data Início",
+            "type": "date",
+            "required": true
+        },
+        {
+            "name": "end_date",
+            "displayName": "Data fim",
+            "type": "date",
+            "required": true
+        }
+    ]
+}
