@@ -40,7 +40,7 @@ WHERE lt.__current
   AND lt.user_id IS NULL
   AND lt.action IN ('checkedin', 'closedLoan')
   AND lt.loan_date::date BETWEEN start_date AND end_date
-  AND (service_point = '' OR spt.code ILIKE '%' || service_point || '%')
+  AND (service_point = '' OR spt.code LIKE '%' || service_point || '%')
 ORDER BY lt.loan_date DESC, it.barcode
 $$
 LANGUAGE SQL
