@@ -63,7 +63,7 @@ WHERE po.__current
   AND po.date_ordered::date BETWEEN start_date AND end_date
   AND (order_status = '' OR po.approved LIKE '%' || order_status || '%' )
   AND (supplier     = '' OR org.name LIKE '%' || supplier || '%')
-order by po.po_number desc
+order by po.po_number desc, pol.po_line_number
 $$
 LANGUAGE SQL
 STABLE
