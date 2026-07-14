@@ -20,28 +20,30 @@ RETURNS TABLE (
 AS $$
 SELECT
     lt.loan_date,
-    lt.return_date,
-    it.barcode,
+    cl."date",
+    clj.jsonb -> 'items' -> 0 ->> 'itemBarcode',
     it.copy_number,
     it.effective_shelving_order,
-    it2.title,
+    ins.title,
     spt.code,
     spt.discovery_display_name
-FROM folio_circulation.loan__t__                lt
-LEFT JOIN  folio_inventory.item__t__            it  ON it.id  = lt.item_id
+FROM folio_audit.circulation_logs__t__          cl
+LEFT JOIN folio_audit.circulation_logs__        clj ON clj.id  = cl.id
+                                                    AND clj.__current
+LEFT JOIN folio_circulation.loan__t__           lt  ON lt.id   = (clj.jsonb -> 'items' -> 0 ->> 'loanId')::uuid
+                                                    AND lt.__current
+LEFT JOIN folio_inventory.item__t__             it  ON it.id   = (clj.jsonb -> 'items' -> 0 ->> 'itemId')::uuid
                                                     AND it.__current
-INNER JOIN folio_inventory.holdings_record__t__ hrt ON hrt.id = it.holdings_record_id
-                                                    AND hrt.__current
-INNER JOIN folio_inventory.instance__t__        it2 ON it2.id = hrt.instance_id
-                                                    AND it2.__current
-LEFT JOIN  folio_inventory.service_point__t__   spt ON spt.id = lt.checkin_service_point_id
+LEFT JOIN folio_inventory.instance__t__         ins ON ins.id  = (clj.jsonb -> 'items' -> 0 ->> 'instanceId')::uuid
+                                                    AND ins.__current
+LEFT JOIN folio_inventory.service_point__t__    spt ON spt.id  = cl.service_point_id
                                                     AND spt.__current
-WHERE lt.__current
-  AND lt.user_id IS NULL
-  AND lt.action IN ('checkedin', 'closedLoan')
-  AND lt.loan_date::date BETWEEN start_date AND end_date
-  AND (service_point = '' OR spt.code LIKE '%' || service_point || '%')
-ORDER BY lt.loan_date DESC, it.barcode
+WHERE cl.__current
+  AND cl.action       = 'Checked in'
+  AND cl.user_barcode IS NULL
+  AND cl."date"::date BETWEEN start_date AND end_date
+  AND (service_point  = '' OR spt.code LIKE '%' || service_point || '%')
+ORDER BY cl."date" DESC
 $$
 LANGUAGE SQL
 STABLE
