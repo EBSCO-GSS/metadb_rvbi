@@ -27,6 +27,7 @@ RETURNS TABLE (
     "Moeda"              text,
     "Quantidade"         int,
     "Preço Unitário"     numeric,
+    "Desconto"     numeric,
     "Total Estimado"     numeric,
     "ISSN/ISBN"          text
 )
@@ -50,6 +51,8 @@ SELECT
     polj.jsonb -> 'cost' ->> 'currency',
     (polj.jsonb -> 'cost' ->> 'quantityPhysical')::int,
     (polj.jsonb -> 'cost' ->> 'listUnitPrice')::numeric,
+    (polj.jsonb -> 'cost' ->> 'discount')::numeric,
+
     (polj.jsonb -> 'cost' ->> 'poLineEstimatedPrice')::numeric,
     polj.jsonb -> 'details' -> 'productIds' -> 0 ->> 'productId'
 FROM folio_orders.purchase_order__t__ po
