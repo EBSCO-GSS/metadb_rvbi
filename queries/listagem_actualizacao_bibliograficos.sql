@@ -9,12 +9,12 @@ CREATE FUNCTION listagem_actualizacao_bibliograficos(
 RETURNS TABLE(
     hrid,
     titulo,
-    data_criacao,
-    timestamp_criacao
-    IDUsuarioCriador
-    CodigoUsuario
-    NomeUsuario
-    GrupoUsuaio
+    data_actualizacao,
+    timestamp_actualizacao,
+    IDUsuarioCriador,
+    CodigoUsuario,
+    NomeUsuario,
+    GrupoUsuario
     )
 AS $$
 
@@ -28,7 +28,7 @@ SELECT
     concat_ws(' ',
         u.jsonb->'personal'->>'firstName',
         u.jsonb->'personal'->>'lastName') AS usuario,
-    g.desc AS groupname
+    g.desc AS GrupoUsuario
 FROM folio_inventory.instance__ i
 LEFT JOIN folio_users.users__ u
        ON u.id = (i.jsonb->'metadata'->>'updatedByUserId')::uuid
